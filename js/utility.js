@@ -31,29 +31,38 @@ function play(e){
     let squarePerRow = Math.sqrt(squareNumbers);
     // console.log(squarePerRow);
 
+    //variabile contenente un array di bombe generate random
     const bombs = createBomb(NUMBOMBS, squareNumbers);
     console.log(bombs);
 
+    //ciclo per creare i quadratini
     for (let i = 1; i <= squareNumbers; i++){
+        //variabile in cui va a finire il singolo quadratino
         const square = drawSquare(i, squarePerRow);
+        //funzione che al click cambia il colore del quadratino
         square.addEventListener('click', function(){
+            //variabile di controllo
             let bombCheck = false;
+            //variabile che prende il contenuto di un quadrato
             const bombValue = parseInt(square.innerText);
             // console.log(bombValue);
+            //controllo se nell'array di bombe c'è il numero cliccato
             if(bombs.includes(bombValue)){
                 bombCheck=true;
             }
+            //scelgo se applicare la classe bomba o scelta giusta
             if (bombCheck === false){
                 square.classList.add('right-choice');
             } else{
                 square.classList.add('bomb');
             }
         })
+        //stampo il quadratino
         field.appendChild(square);
     }
 }
 
-
+//funzione per creare i quadratini
 function drawSquare(index, numSquares){
     const square = document.createElement('div');
     square.classList.add('square');
@@ -63,6 +72,7 @@ function drawSquare(index, numSquares){
     return square;
 }
 
+//funzione per creare un array di bombe randomicamente
 function createBomb(bombsNum, numsquares){
     const bombs = [];
     while (bombs.length < bombsNum){
@@ -74,6 +84,7 @@ function createBomb(bombsNum, numsquares){
     return bombs;
 }
 
+//funzione per generare un numero random
 function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
   }
