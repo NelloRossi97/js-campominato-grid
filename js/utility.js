@@ -13,6 +13,10 @@ function play(e){
     let squareNumbers;
     //tolgo la classe d-none al campo di gioco
     document.querySelector('.field').classList.remove('d-none');
+    //variabile per determinare il game over
+    let gameOver = false;
+    //prendo il contenitore del punteggio
+    const scoreBox = document.getElementById('score');
 
     //uso uno switch per determinare il numero di caselle da creare
     switch(level){
@@ -34,28 +38,31 @@ function play(e){
     //variabile contenente un array di bombe generate random
     const bombs = createBomb(NUMBOMBS, squareNumbers);
     console.log(bombs);
-
+    let score = 0;
     //ciclo per creare i quadratini
     for (let i = 1; i <= squareNumbers; i++){
         //variabile in cui va a finire il singolo quadratino
         const square = drawSquare(i, squarePerRow);
         //funzione che al click cambia il colore del quadratino
         square.addEventListener('click', function(){
-            //variabile di controllo
-            let bombCheck = false;
             //variabile che prende il contenuto di un quadrato
             const bombValue = parseInt(square.innerText);
             // console.log(bombValue);
             //controllo se nell'array di bombe c'è il numero cliccato
-            if(bombs.includes(bombValue)){
-                bombCheck=true;
-            }
+           
             //scelgo se applicare la classe bomba o scelta giusta
-            if (bombCheck === false){
-                square.classList.add('right-choice');
-            } else{
-                square.classList.add('bomb');
+            if (!gameOver && !square.classList.contains('right-choice')){
+               if (bombs.includes(bombValue)){
+                    square.classList.add('bomb');
+                    gameOver = true;
+                    scoreBox.innerHTML = `<h3>Hai perso! il tuo punteggio è ${score}</h3>`;
+                } else{
+                    square.classList.add('right-choice');
+                    score++;
+                    scoreBox.innerHTML = `<h3>Il tuo punteggio è ${score}</h3>`;
+                } 
             }
+            
         })
         //stampo il quadratino
         field.appendChild(square);
@@ -68,7 +75,7 @@ function drawSquare(index, numSquares){
     square.classList.add('square');
     square.style.width = `calc(100% / ${numSquares})`;
     square.style.height = `calc(100% / ${numSquares})`;
-    square.innerText = index;
+    square.innerHTML = `<span>${index}</span>`;
     return square;
 }
 

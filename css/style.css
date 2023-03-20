@@ -37,3 +37,7 @@ main{
 .bomb{
     background-color: red;
 }
+
+.square span{
+    opacity: 0;
+}
