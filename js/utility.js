@@ -53,7 +53,6 @@ function play(e){
             // console.log(bombValue);
             //controllo se nell'array di bombe c'è il numero cliccato
             win = squareNumbers - parseInt(bombs.length);
-            console.log(win);
             //scelgo se applicare la classe bomba o scelta giusta
             if (!gameOver && !square.classList.contains('right-choice')){
                if (bombs.includes(bombValue)){
