@@ -18,6 +18,8 @@ function play(e){
     //prendo il contenitore del punteggio
     const scoreBox = document.getElementById('score');
 
+    let win = 0;
+
     //uso uno switch per determinare il numero di caselle da creare
     switch(level){
         case 'easy':
@@ -50,7 +52,8 @@ function play(e){
             let bombValue = parseInt(square.innerText);
             // console.log(bombValue);
             //controllo se nell'array di bombe c'è il numero cliccato
-           
+            win = squareNumbers - parseInt(bombs.length);
+            console.log(win);
             //scelgo se applicare la classe bomba o scelta giusta
             if (!gameOver && !square.classList.contains('right-choice')){
                if (bombs.includes(bombValue)){
@@ -63,7 +66,11 @@ function play(e){
                     square.classList.add('right-choice');
                     score++;
                     scoreBox.innerHTML = `<h3>Il tuo punteggio è ${score}</h3>`;
-                } 
+                }
+            }
+            if (score === win){
+                gameOver = true;
+                scoreBox.innerHTML = `<h3>Complimenti! Hai vinto! Il tuo punteggio è ${score}</h3>`;
             }
             
             
