@@ -39,6 +39,7 @@ function play(e){
     const bombs = createBomb(NUMBOMBS, squareNumbers);
     console.log(bombs);
     let score = 0;
+    
     //ciclo per creare i quadratini
     for (let i = 1; i <= squareNumbers; i++){
         //variabile in cui va a finire il singolo quadratino
@@ -46,7 +47,7 @@ function play(e){
         //funzione che al click cambia il colore del quadratino
         square.addEventListener('click', function(){
             //variabile che prende il contenuto di un quadrato
-            const bombValue = parseInt(square.innerText);
+            let bombValue = parseInt(square.innerText);
             // console.log(bombValue);
             //controllo se nell'array di bombe c'è il numero cliccato
            
@@ -55,7 +56,9 @@ function play(e){
                if (bombs.includes(bombValue)){
                     square.classList.add('bomb');
                     gameOver = true;
-                    scoreBox.innerHTML = `<h3>Hai perso! il tuo punteggio è ${score}</h3>`;
+                    scoreBox.innerHTML = `<h3 class="text-center">Hai perso! il tuo punteggio è ${score}</h3>
+                    <h4 class="text-center">Premi Gioca per ricominciare</h4>`;
+                    showBombs(bombs);
                 } else{
                     square.classList.add('right-choice');
                     score++;
@@ -63,9 +66,19 @@ function play(e){
                 } 
             }
             
+            
         })
         //stampo il quadratino
         field.appendChild(square);
+    }
+    //funzione per mostrare le bombe quando si perde
+    function showBombs(bombs){
+        const squares = document.querySelectorAll('.square');
+        for (square of squares){
+            if(bombs.includes(parseInt(square.innerText))){
+                square.classList.add('bomb');
+            }
+        }
     }
 }
 
@@ -94,4 +107,5 @@ function createBomb(bombsNum, numsquares){
 //funzione per generare un numero random
 function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
-  }
+}
+
